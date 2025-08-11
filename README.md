@@ -1,4 +1,4 @@
-* AMR-Watch Kenya: National Antimicrobial Resistance Surveillance Hub
+###  AMR-Watch Kenya: National Antimicrobial Resistance Surveillance Hub
 
 ## Project Overview
 
@@ -7,8 +7,8 @@ AMR-Watch Kenya solves this by creating a simple platform where labs can share t
 
 ## Why This Project Matters:
 
-Kenyan labs already do the tests 
+* Kenyan labs already do the tests 
 
-Global studies use estimates
+* Global studies use estimates
 
-The data exists - it's just not organized or accessible
+* The data exists - it's just not organized or accessible
