@@ -1,4 +1,4 @@
-###  AMR-Watch Kenya: National Antimicrobial Resistance Surveillance Hub
+# AMR-Watch Kenya: National Antimicrobial Resistance Surveillance Hub
 
 ## Project Overview
 
