@@ -1,52 +1,62 @@
 from django.db import models
+from django.contrib.auth.models import User
 
-# Create your models here.
-class User(models.Model):
-    username = models.CharField(max_length=100, unique=True)
-    email = models.EmailField(unique=True)
-    password = models.CharField(max_length=128)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-    def __str__(self):
-        return self.username
+class Lab(models.Model):
+    LAB_TYPE_CHOICES = [
+        ('hospital', 'Hospital'),
+        ('research', 'Research'),
+        ('private', 'Private'),
+    ]
     
-class lab(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    name = models.CharField(max_length=200)
+    location = models.CharField(max_length=200)
+    lab_type = models.CharField(max_length=50, choices=LAB_TYPE_CHOICES)
+    created_at = models.DateTimeField(auto_now_add=True)
+    
+    def __str__(self):
+        return self.name
+
+class Antibiotic(models.Model):
     name = models.CharField(max_length=100, unique=True)
-    location = models.CharField(max_length=255)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
+    category = models.CharField(max_length=100, blank=True)
     
     def __str__(self):
-        return self.name  
+        return self.name
 
-class isolate(models.Model):
-    name = models.CharField(max_length=100)
-    lab = models.ForeignKey(lab, on_delete=models.CASCADE, related_name='isolates')
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-    date_collected = models.DateField()
-    type = models.CharField(max_length=100)
-    specimen_type = models.CharField(max_length=100)
-
-    def __str__(self):
-        return self.name      
+class Isolate(models.Model):
+    SAMPLE_TYPE_CHOICES = [
+        ('blood', 'Blood'),
+        ('urine', 'Urine'),
+        ('stool', 'Stool'),
+        ('sputum', 'Sputum'),
+        ('wound', 'Wound'),
+        ('other', 'Other'),
+    ]
     
-class amr_result(models.Model):
-    isolate = models.ForeignKey(isolate, on_delete=models.CASCADE, related_name='amr_results')
-    antibiotic = models.CharField(max_length=100)
-    result = models.CharField(max_length=50)  # e.g., 'resistant', 'susceptible'
+    lab = models.ForeignKey(Lab, on_delete=models.CASCADE, related_name='isolates')
+    bacteria_name = models.CharField(max_length=200)
+    sample_type = models.CharField(max_length=100, choices=SAMPLE_TYPE_CHOICES)
+    test_date = models.DateField()
     created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-
-    def __str__(self):
-        return f"{self.isolate.name} - {self.antibiotic} - {self.result}"
     
-class antibiotic(models.Model):
-    name = models.CharField(max_length=100, unique=True)
-    mechanism_of_action = models.TextField()
-    spectrum_of_activity = models.TextField()
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-
     def __str__(self):
-        return self.name    
+        return f"{self.bacteria_name} - {self.test_date}"
+
+class TestResult(models.Model):
+    RESULT_CHOICES = [
+        ('R', 'Resistant'),
+        ('I', 'Intermediate'),
+        ('S', 'Sensitive'),
+    ]
+    
+    isolate = models.ForeignKey(Isolate, on_delete=models.CASCADE, related_name='results')
+    antibiotic = models.ForeignKey(Antibiotic, on_delete=models.CASCADE)
+    result = models.CharField(max_length=1, choices=RESULT_CHOICES)
+    created_at = models.DateTimeField(auto_now_add=True)
+    
+    class Meta:
+        unique_together = ['isolate', 'antibiotic']
+    
+    def __str__(self):
+        return f"{self.isolate.bacteria_name} - {self.antibiotic.name}: {self.result}"
