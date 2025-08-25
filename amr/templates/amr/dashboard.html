@@ -1,0 +1,70 @@
+html
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1>AMR Public Dashboard</h1>
+    <p class="lead">Open data on antimicrobial resistance in Kenya</p>
+    
+    <div class="row mt-4">
+        <div class="col-md-4">
+            <div class="card bg-primary text-white">
+                <div class="card-body text-center">
+                    <h3>{{ total_labs }}</h3>
+                    <p>Participating Labs</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card bg-info text-white">
+                <div class="card-body text-center">
+                    <h3>{{ total_isolates }}</h3>
+                    <p>Isolates Tested</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card bg-success text-white">
+                <div class="card-body text-center">
+                    <h3>{{ total_tests }}</h3>
+                    <p>Total Tests</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="row mt-5">
+        <div class="col-md-12">
+            <h2>Resistance Overview</h2>
+            {% if resistance_stats %}
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Result</th>
+                            <th>Count</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for stat in resistance_stats %}
+                            <tr>
+                                <td>
+                                    {% if stat.result == 'R' %}Resistant{% endif %}
+                                    {% if stat.result == 'I' %}Intermediate{% endif %}
+                                    {% if stat.result == 'S' %}Sensitive{% endif %}
+                                </td>
+                                <td>{{ stat.count }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            {% else %}
+                <div class="alert alert-info">
+                    <h4>Data Coming Soon!</h4>
+                    <p>As laboratories submit their antibiogram results, real-time resistance trends will appear here.</p>
+                    <p>If you represent a laboratory, <a href="{% url 'register' %}">register now</a> to start contributing data.</p>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,51 @@
+html
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1>Welcome, {{ lab.name }}</h1>
+    <p class="lead">{{ lab.location }} - {{ lab.get_lab_type_display }}</p>
+    
+    <div class="row mt-4">
+        <div class="col-md-12">
+            <a href="{% url 'submit_isolate' %}" class="btn btn-primary">Submit New Isolate</a>
+        </div>
+    </div>
+    
+    <div class="row mt-4">
+        <div class="col-md-12">
+            <h2>Recent Isolate Submissions</h2>
+            {% if isolates %}
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Bacteria</th>
+                            <th>Sample Type</th>
+                            <th>Test Date</th>
+                            <th>Submitted</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for isolate in isolates %}
+                            <tr>
+                                <td>{{ isolate.bacteria_name }}</td>
+                                <td>{{ isolate.get_sample_type_display }}</td>
+                                <td>{{ isolate.test_date }}</td>
+                                <td>{{ isolate.created_at|date:"M d, Y" }}</td>
+                                <td>
+                                    <a href="{% url 'submit_results' isolate.id %}" class="btn btn-sm btn-secondary">
+                                        Add/Edit Results
+                                    </a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            {% else %}
+                <p>No isolates submitted yet. <a href="{% url 'submit_isolate' %}">Submit your first isolate</a></p>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

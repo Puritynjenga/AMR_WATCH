@@ -1,0 +1,54 @@
+html
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1>About Antimicrobial Resistance</h1>
+    
+    <div class="row mt-4">
+        <div class="col-md-8">
+            <h2>What is AMR?</h2>
+            <p>Antimicrobial resistance (AMR) occurs when bacteria, viruses, fungi, and parasites evolve to resist the medicines designed to kill them. This makes infections harder to treat and increases the risk of disease spread, severe illness, and death.</p>
+            
+            <h2>The Situation in Kenya</h2>
+            <ul>
+                <li>80% of E. coli in some areas are resistant to multiple antibiotics</li>
+                <li>Laboratory data exists but is scattered across facilities</li>
+                <li>Doctors lack real-time data on which antibiotics work</li>
+                <li>AMR threatens to undo decades of medical progress</li>
+            </ul>
+            
+            <h2>How AMR-Watch Kenya Helps</h2>
+            <p>By centralizing antibiogram data from laboratories across Kenya, we provide:</p>
+            <ul>
+                <li>Real-time resistance trends</li>
+                <li>Evidence for better treatment decisions</li>
+                <li>Data for policy makers</li>
+                <li>Transparency for public awareness</li>
+            </ul>
+            
+            <h2>What You Can Do</h2>
+            <div class="alert alert-warning">
+                <h4>Safe Antibiotic Use</h4>
+                <ul>
+                    <li>Only use antibiotics when prescribed by a healthcare provider</li>
+                    <li>Always complete the full course, even if you feel better</li>
+                    <li>Never share antibiotics with others</li>
+                    <li>Don't save leftover antibiotics</li>
+                    <li>Don't pressure doctors for antibiotics</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="col-md-4">
+            <div class="card bg-light">
+                <div class="card-body">
+                    <h4>Join the Fight</h4>
+                    <p>If you work in a laboratory, register to contribute data.</p>
+                    <a href="{% url 'register' %}" class="btn btn-primary">Register Your Lab</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

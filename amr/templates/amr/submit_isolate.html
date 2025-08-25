@@ -1,0 +1,43 @@
+html
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h2 class="card-title">Submit New Isolate</h2>
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label class="form-label">Bacteria Name</label>
+                            {{ form.bacteria_name }}
+                            <small class="form-text text-muted">e.g., Escherichia coli, Staphylococcus aureus</small>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Sample Type</label>
+                            {{ form.sample_type }}
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Test Date</label>
+                            {{ form.test_date }}
+                        </div>
+                        <button type="submit" class="btn btn-primary">Submit Isolate</button>
+                        <a href="{% url 'lab_dashboard' %}" class="btn btn-secondary">Cancel</a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    input, select {
+        width: 100%;
+        padding: 8px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+    }
+</style>
+{% endblock %}
